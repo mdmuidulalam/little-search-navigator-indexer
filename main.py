@@ -1,6 +1,9 @@
 from flask import Flask
-app = Flask(__name__)
+from src.routes.entityIndexer import entityIndexerApis
 
-@app.route('/')
-def hello():
-    return 'Hello, Little Search Navigator!'
+app = Flask(__name__)
+app.config["DEBUG"] = True
+
+app.register_blueprint(entityIndexerApis)
+
+app.run()
