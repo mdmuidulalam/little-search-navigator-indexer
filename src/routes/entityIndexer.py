@@ -1,7 +1,16 @@
-from flask import Blueprint
+from flask import request
 
-entityIndexerApis = Blueprint('entityIndexerApis', __name__)
+from src.helpers.staticHelper import StaticHelper
+from src.routes.interfaces.iEntityIndexerLogic import IEntityIndexerLogic
+class EntityIndexer:
+    def __init__(self, app, entityIndexerLogic):
+        StaticHelper.isInterfaceResloved(entityIndexerLogic, IEntityIndexerLogic)
+        self.entityIndexerLogic = entityIndexerLogic
+        self.setRoutes(app)
 
-@entityIndexerApis.route('/')
-def hello():
-    return 'Hello, Little Search Navigator!'
+    def setRoutes(self, app):
+        app.add_url_rule('/create', 'Create Entity', self.create, methods = ['POST'])
+
+    def create(self):
+        self.entityIndexerLogic.createIndex(request.json)
+        return 'Hello, Little Search Navigator!'

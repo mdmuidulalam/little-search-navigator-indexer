@@ -1,9 +1,15 @@
 from flask import Flask
-from src.routes.entityIndexer import entityIndexerApis
+
+from src.routes.entityIndexer import EntityIndexer
+
+from src.logics.entityIndexerLogic import EntityIndexerLogic
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-app.register_blueprint(entityIndexerApis)
+EntityIndexer(
+    app = app,
+    entityIndexerLogic =  EntityIndexerLogic()
+)
 
 app.run()
