@@ -2,10 +2,12 @@ from flask import request
 
 from src.helpers.staticHelper import StaticHelper
 from src.routes.interfaces.iEntityIndexerLogic import IEntityIndexerLogic
+
 class EntityIndexer:
     def __init__(self, app, entityIndexerLogic):
-        StaticHelper.isInterfaceResloved(entityIndexerLogic, IEntityIndexerLogic)
         self.entityIndexerLogic = entityIndexerLogic
+        StaticHelper.isInterfaceResloved(self.entityIndexerLogic, IEntityIndexerLogic)
+
         self.setRoutes(app)
 
     def setRoutes(self, app):
@@ -13,4 +15,4 @@ class EntityIndexer:
 
     def create(self):
         self.entityIndexerLogic.createIndex(request.json)
-        return 'Hello, Little Search Navigator!'
+        return '', 201
